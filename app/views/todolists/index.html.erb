@@ -1,0 +1,42 @@
+<h1>Books</h1>
+ <table border="0">
+
+ <tr>
+    <th>タイトル</th><th>Body</th>
+</tr>
+<tr>
+	<% @lists.each do |list| %>
+
+    <td><%= list.title %></td>
+    <td><%= list.body %></td>
+    <td><%=link_to "edit",  edit_book_path(list.id)%></td>
+    <td><%=link_to "show",  book_path(list.id)%></td>
+    <td><%= link_to "destroy",destroy_book_path(list.id), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
+</tr>
+      <% end %>
+</table>
+
+
+<h1>New Book</h1>
+<%= form_for(@list, url: '/books') do |f| %>
+
+	<h4>タイトル</h4>
+	<%= f.text_field :title %><!--１行テキストを入力するためのフォーム-->
+
+	<h4>本文</h4>
+	<%= f.text_area :body %><!--長文用のフォーム-->
+
+	<%= f.submit '投稿' %>
+
+<% end %>
+
+<% if @list.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <ul>
+      <% @list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
